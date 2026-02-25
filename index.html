@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iyashi No Kage Debut</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bgmain: 'var(--color-bg-main)',
+                        bgsecondary: 'var(--color-bg-sec)',
+                        primary: 'var(--color-primary)',
+                        primaryDark: 'var(--color-primary-dark)',
+                        textmain: 'var(--color-text-main)',
+                        textmuted: 'var(--color-text-muted)',
+                        secondary: '#FCD34D', 
+                        accent: '#F472B6',    
+                        discord: '#5865F2',
+                        instagram: '#E1306C',
+                        twitter: '#1DA1F2',
+                        youtube: '#FF0000'
+                    },
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                        display: ['Fredoka', 'sans-serif'],
+                        mono: ['Courier New', 'Courier', 'monospace'] // Untuk KTP
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'spin-slow': 'spin 10s linear infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-soft': 'pulseSoft 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-15px) rotate(5deg)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                            '50%': { transform: 'scale(1.02)', opacity: '0.9' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --color-bg-main: #F0F9FF; 
+            --color-bg-sec: #FFFFFF;
+            --color-primary: #0EA5E9;   
+            --color-primary-dark: #0284C7;
+            --color-text-main: #0C4A6E; 
+            --color-text-muted: #38BDF8;
+            --stroke-color: #0284C7;
+        }
+
+        [data-theme="dark"] {
+            --color-bg-main: #020617; 
+            --color-bg-sec: #0F172A;
+            --color-primary: #818CF8;
+            --color-primary-dark: #6366F1;
+            --color-text-main: #F1F5F9;
+            --color-text-muted: #94A3B8;
+            --stroke-color: #4338ca;
+        }
+
+        /* Mouse Cursor Customization */
+        body {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size: 24px;'><text y='24'>🍗</text></svg>"), auto;
+        }
+        a, button, .clickable {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size: 24px;'><text y='24'>✨</text></svg>"), pointer;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-bg-main); }
+        ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 10px; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        [data-theme="dark"] .glass {
+            background: rgba(15, 23, 42, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-stroke {
+            text-shadow: 
+                -2px -2px 0 var(--stroke-color),  
+                 2px -2px 0 var(--stroke-color),
+                -2px  2px 0 var(--stroke-color),
+                 2px  2px 0 var(--stroke-color),
+                 6px 6px 0 rgba(0,0,0,0.15);
+            color: white;
+        }
+
+        #hero-overlay {
+            background: linear-gradient(to bottom, rgba(240, 249, 255, 0.1) 0%, rgba(240, 249, 255, 0.4) 35%, rgba(240, 249, 255, 0.9) 85%, rgba(240, 249, 255, 1) 100%);
+        }
+        [data-theme="dark"] #hero-overlay {
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.2) 0%, rgba(2, 6, 23, 0.5) 35%, rgba(2, 6, 23, 0.9) 85%, rgba(2, 6, 23, 1) 100%);
+        }
+
+        .video-container, .shorts-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+        }
+        .video-container { padding-bottom: 56.25%; height: 0; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .shorts-container { padding-bottom: 177.78%; height: 0; }
+        .video-container iframe, .shorts-container iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .lore-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
+        }
+        [data-theme="dark"] .lore-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 50px -15px rgba(0,0,0,0.4);
+        }
+
+        .icon-deco { pointer-events: none; user-select: none; position: absolute; }
+        
+        /* Video Fullscreen Modal Overlay */
+        #video-modal {
+            backdrop-filter: blur(20px);
+            transition: opacity 0.5s ease;
+        }
+        #video-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-bgmain text-textmain font-sans overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-500">
+
+    <!-- Modal Video Lore -->
+    <div id="video-modal" class="fixed inset-0 z-[100] bg-black/95 hidden flex flex-col items-center justify-center opacity-0">
+        <div class="relative w-full max-w-5xl px-4">
+            <h2 class="text-white font-display text-center text-xl md:text-3xl mb-4 animate-pulse">Menonton Kisah Iyashi...</h2>
+            <!-- Video Player (Tanpa Kontrol) -->
+            <!-- Ganti src dengan link file MP4 lore kamu (contoh: lore-video.mp4) -->
+            <video id="lore-video-player" class="w-full rounded-2xl shadow-2xl border-4 border-primary/50 pointer-events-none" src="https://www.w3schools.com/html/mov_bbb.mp4" playsinline></video>
+            <p class="text-gray-400 text-center text-sm mt-4 font-mono"><i class="fas fa-lock text-xs mr-1"></i> Video ini tidak bisa di-skip. Nikmati ceritanya 🍗</p>
+        </div>
+    </div>
+
+    <!-- Navbar Desktop -->
+    <nav class="hidden md:block fixed w-full z-50 glass top-0 shadow-sm">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-xl font-display font-bold text-primaryDark tracking-wide flex items-center gap-2">
+                <i id="nav-icon" class="fas fa-sun text-secondary animate-spin-slow"></i> 
+                IYASHI NO <span class="text-primary">KAGE</span>
+            </a>
+            <div class="flex space-x-6 text-textmain font-bold items-center text-sm">
+                <a href="#home" class="hover:text-primary transition-colors">Home</a>
+                <a href="#lore" class="hover:text-primary transition-colors">Lore</a>
+                <a href="#biodata" class="hover:text-primary transition-colors">Biodata</a>
+                <a href="#clips" class="hover:text-primary transition-colors">Shorts</a>
+                <a href="#fanart" class="hover:text-primary transition-colors">Galeri</a>
+                <a href="#thanks" class="hover:text-primary transition-colors">Credits</a>
+                <a href="https://discord.gg/yourlink" target="_blank" class="px-5 py-1.5 bg-discord text-white rounded-full hover:opacity-90 transition-all shadow-md flex items-center gap-2">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Mobile -->
+    <div class="md:hidden fixed top-0 w-full z-40 glass px-6 py-3 flex justify-center items-center shadow-sm">
+        <a href="#" class="text-xl font-display font-bold text-primaryDark tracking-wide flex items-center gap-2">
+            <i id="nav-icon-mobile" class="fas fa-sun text-secondary animate-spin-slow"></i> 
+            IYASHI NO <span class="text-primary">KAGE</span>
+        </a>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button onclick="toggleTheme()" id="theme-btn" class="fixed bottom-24 right-4 md:bottom-10 md:right-10 z-40 w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-slate-800 text-secondary rounded-full shadow-2xl flex items-center justify-center border-4 border-white/50 dark:border-slate-700 hover:scale-110 transition-all active:scale-95 group">
+        <i class="fas fa-sun text-xl md:text-2xl group-hover:rotate-90 transition-transform duration-500"></i>
+    </button>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden transition-colors duration-500 pt-32 pb-16 md:pt-24">
+        <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0" src="https://raw.githubusercontent.com/katamamahbisacoding/mentahan/800d5767112b90e19d51887aaae0f421422d3f4f/yasage-finall.mp4"></video>
+        <div id="hero-overlay" class="absolute inset-0 z-0 pointer-events-none"></div>
+
+        <!-- Decorations Hero -->
+        <i class="fas fa-cloud text-white icon-deco top-1/4 left-10 text-6xl animate-float opacity-80 drop-shadow-lg"></i>
+        <i class="fas fa-cloud text-white icon-deco top-1/3 right-20 text-5xl animate-float-slow opacity-60 drop-shadow-lg"></i>
+        <i class="fas fa-drumstick-bite text-primary icon-deco bottom-1/4 left-20 text-4xl animate-float opacity-30"></i>
+        <i class="fas fa-drumstick-bite text-secondary icon-deco top-20 right-1/4 text-5xl animate-spin-slow opacity-20"></i>
+
+        <div class="container mx-auto relative z-10 text-center px-4">
+            <div class="h-10 md:h-14 w-full"></div>
+
+            <div class="animate-fade-in-up flex flex-col items-center">
+                <div class="inline-flex items-center gap-2 py-1.5 px-6 rounded-full bg-white/95 dark:bg-slate-900/90 text-primary font-bold text-[10px] md:text-xs mb-6 md:mb-10 border border-primary/20 shadow-lg backdrop-blur animate-pulse-soft">
+                    <i class="fas fa-drumstick-bite text-secondary"></i>
+                    <span>OFFICIAL DEBUT IYASHI NO KAGE</span>
+                    <i class="fas fa-cat text-secondary"></i>
+                </div>
+                
+                <h1 class="text-5xl sm:text-6xl md:text-8xl lg:text-9xl xl:text-[9rem] font-display font-bold text-white drop-shadow-2xl text-stroke leading-tight md:leading-none tracking-tighter mb-8 md:mb-14 break-words px-2">
+                    IYASHI NO <span class="text-secondary">KAGE</span>
+                </h1>
+                
+                <p class="text-textmain font-bold text-sm md:text-xl max-w-[280px] md:max-w-md mx-auto bg-white/80 dark:bg-slate-900/80 py-4 px-6 md:px-8 rounded-3xl backdrop-blur-md shadow-2xl border border-white/50 dark:border-white/10 mb-10 md:mb-16">
+                    Iyashi No Kage Disini, Siapa Disana?
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-[240px] sm:max-w-md mx-auto">
+                    <a href="#lore" class="flex-1 px-6 py-4 bg-primary text-white font-bold rounded-2xl hover:bg-primaryDark transition-all shadow-lg hover:-translate-y-1 ring-4 ring-white/30 dark:ring-primary/20 text-center text-sm md:text-base">
+                        Kenalan Yuk!
+                    </a>
+                    <a href="#clips" class="flex-1 px-6 py-4 bg-white dark:bg-slate-800 text-primary font-bold rounded-2xl border-2 border-primary/10 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all shadow-lg hover:-translate-y-1 text-center text-sm md:text-base">
+                        Tonton Shorts
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE SUBSCRIBER SECTION -->
+    <section class="py-16 bg-bgmain transition-colors duration-500 relative z-20 overflow-hidden px-4">
+        <i class="fab fa-youtube text-youtube/5 icon-deco -left-20 top-0 text-[300px] -rotate-12"></i>
+        <i class="fas fa-drumstick-bite text-primary/10 icon-deco right-10 top-1/2 text-[100px] animate-float"></i>
+        
+        <div class="container mx-auto text-center">
+            <div class="max-w-2xl mx-auto flex flex-col items-center relative">
+                <h2 class="text-3xl md:text-6xl font-display font-bold text-primary mb-2 uppercase tracking-tight drop-shadow-sm">LIVE SUBSCRIBER</h2>
+                <p class="text-textmuted font-bold text-sm md:text-xl mb-8 tracking-[0.2em] md:tracking-[0.3em]">UPDATE SETIAP DETIK 🍗</p>
+                
+                <div class="live-count-box p-4 md:p-6 border-4 border-primary/10 dark:border-primary/5 scale-100 md:scale-125 relative bg-white dark:bg-slate-800 rounded-3xl shadow-inner">
+                    <div class="absolute -top-4 -right-4 w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white shadow-lg animate-pulse z-10">
+                        <i class="fas fa-heart text-sm"></i>
+                    </div>
+                    <!-- Embed Subscriber -->
+                     <iframe height="80px" width="300px" frameborder="0" src="https://livecounts.io/embed/youtube-live-subscriber-counter/UCguA4kxlPY0us979Jx1h7Sg" style="border: 0; width:300px; height:80px; max-width: 100%;"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LORE SECTION (Video Modal Trigger) -->
+    <section id="lore" class="py-24 bg-bgsecondary dark:bg-slate-900 relative transition-colors duration-500 overflow-hidden">
+        <i class="fas fa-cloud text-primary/10 icon-deco -left-20 top-10 text-[250px] animate-float-slow"></i>
+        <i class="fas fa-cloud text-primary/10 icon-deco right-0 bottom-10 text-[180px] animate-float"></i>
+        <i class="fas fa-drumstick-bite text-secondary/10 icon-deco right-20 top-20 text-[100px] rotate-45"></i>
+
+        <div class="container mx-auto px-6 relative">
+            <div class="text-center mb-16 px-4">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-textmain mb-4">Kisah <span class="text-primary">Iyashi</span></h2>
+                <div class="h-1.5 w-24 bg-primary/50 rounded-full mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <!-- Foto Model -->
+                <div class="relative group px-4">
+                    <div class="absolute inset-4 bg-primary rounded-[3rem] -rotate-3 opacity-10 animate-float-slow"></div>
+                    <div class="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white dark:border-slate-800 transform rotate-2">
+                        <img src="https://raw.githubusercontent.com/katamamahbisacoding/mentahan/56f95f55a07efd00ced7e31b4adfe813539156a8/Desain%20tanpa%20judul%20(16).png" alt="Model Iyashi" class="w-full object-cover">
+                        <div class="absolute top-4 left-4 bg-white/90 dark:bg-slate-900/90 p-3 rounded-2xl shadow-lg border border-primary/20">
+                            <i class="fas fa-sun text-secondary text-2xl animate-spin-slow"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teks Lore & Tombol Play -->
+                <div class="px-4">
+                    <div class="lore-card p-8 md:p-12 rounded-[2.5rem] md:rounded-[3rem] relative">
+                        <div class="relative z-10 space-y-6">
+                            <div class="flex items-center gap-4 mb-4">
+                                <span class="w-12 h-1 bg-primary rounded-full"></span>
+                                <h3 class="text-xl md:text-2xl font-display font-bold text-primary uppercase tracking-wider">Sang Pembawa Tenang</h3>
+                            </div>
+
+                            <!-- TOMBOL PUTAR VIDEO -->
+                            <button onclick="playLoreVideo()" class="w-full sm:w-auto px-8 py-5 bg-gradient-to-r from-primary to-primaryDark text-white font-bold rounded-2xl hover:scale-105 transition-all shadow-[0_10px_30px_rgba(14,165,233,0.4)] flex items-center justify-center gap-3 text-lg relative overflow-hidden group">
+                                <div class="absolute inset-0 bg-white/20 w-full h-full -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+                                <i class="fas fa-play-circle text-2xl"></i> Tonton Lore Iyashi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BIODATA KTP SECTION -->
+    <section id="biodata" class="py-24 bg-bgmain relative transition-colors duration-500 overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-textmain mb-4">Kartu Identitas <span class="text-primary">Vtuber</span></h2>
+                <div class="h-1.5 w-24 bg-primary/50 rounded-full mx-auto"></div>
+            </div>
+
+            <!-- Kartu KTP Image -->
+            <div class="max-w-3xl mx-auto flex justify-center transform hover:-translate-y-2 transition-transform duration-300">
+                <img src="https://raw.githubusercontent.com/katamamahbisacoding/mentahan/800d5767112b90e19d51887aaae0f421422d3f4f/Tak%20berjudul43_20260126181428.png" alt="KTP Iyashi No Kage" class="w-full h-auto rounded-2xl shadow-2xl border-4 border-white dark:border-slate-700">
+            </div>
+        </div>
+    </section>
+
+    <!-- INTRO VIDEO SECTION -->
+
+
+    <!-- CLIPS SECTION -->
+    <section id="clips" class="py-24 bg-bgmain dark:bg-slate-900 transition-colors duration-500 overflow-hidden relative px-4">
+        <i class="fas fa-bolt text-secondary/5 icon-deco left-10 top-1/2 text-9xl"></i>
+        
+        <div class="container mx-auto px-2 md:px-6 relative">
+            <div class="flex flex-col md:flex-row justify-center items-center mb-12 gap-4">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-textmain text-center">Video <span class="text-primary">Shorts</span></h2>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+                <div class="group transition-all hover:-translate-y-2">
+                    <div class="shorts-container shadow-xl md:shadow-2xl relative border-2 border-white/20 dark:border-white/5 rounded-2xl overflow-hidden">
+                        <iframe src="https://www.youtube.com/embed/LOnZePTGWvk" allowfullscreen></iframe>
+                    </div>
+                    <p class="mt-4 font-bold text-[11px] md:text-sm text-center text-textmain px-2 bg-white/50 dark:bg-slate-800/50 py-2 rounded-lg backdrop-blur-sm">Pembahasan Apa Ini Dawg</p>
+                </div>
+                <div class="group transition-all hover:-translate-y-2">
+                    <div class="shorts-container shadow-xl md:shadow-2xl relative border-2 border-white/20 dark:border-white/5 rounded-2xl overflow-hidden">
+                        <iframe src="https://www.youtube.com/embed/qyxiQXBxuHk" allowfullscreen></iframe>
+                    </div>
+                    <p class="mt-4 font-bold text-[11px] md:text-sm text-center text-textmain px-2 bg-white/50 dark:bg-slate-800/50 py-2 rounded-lg backdrop-blur-sm">Day 1 Jadi Femboy</p>
+                </div>
+                <div class="group transition-all hover:-translate-y-2">
+                    <div class="shorts-container shadow-xl md:shadow-2xl relative border-2 border-white/20 dark:border-white/5 rounded-2xl overflow-hidden">
+                        <iframe src="https://www.youtube.com/embed/jMXNA-0fC0Q" allowfullscreen></iframe>
+                    </div>
+                    <p class="mt-4 font-bold text-[11px] md:text-sm text-center text-textmain px-2 bg-white/50 dark:bg-slate-800/50 py-2 rounded-lg backdrop-blur-sm">Short Pertama</p>
+                </div>
+                <div class="group transition-all hover:-translate-y-2">
+                    <div class="shorts-container shadow-xl md:shadow-2xl relative border-2 border-white/20 dark:border-white/5 rounded-2xl overflow-hidden">
+                        <iframe src="https://www.youtube.com/embed/c3tjKS5PkXc" allowfullscreen></iframe>
+                    </div>
+                    <p class="mt-4 font-bold text-[11px] md:text-sm text-center text-textmain px-2 bg-white/50 dark:bg-slate-800/50 py-2 rounded-lg backdrop-blur-sm">Video Terpopuler</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI FAN ART -->
+    <section id="fanart" class="py-24 bg-bgsecondary dark:bg-bgmain transition-colors duration-500 relative px-4">
+        <i class="fas fa-drumstick-bite text-primary/5 icon-deco right-10 top-0 text-9xl rotate-12"></i>
+        
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-display font-bold text-textmain mb-12 flex items-center justify-center gap-4">
+                <i class="fas fa-palette text-primary"></i> Galeri <span class="text-instagram">Fan Art</span>
+            </h2>
+            <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-8 max-w-6xl mx-auto">
+                <!-- Art 1 -->
+                <div class="break-inside-avoid rounded-3xl overflow-hidden shadow-xl bg-bgsecondary dark:bg-slate-800 border-2 border-white/50 dark:border-white/5 transform hover:scale-105 transition-transform">
+                    <img src="https://i.postimg.cc/4dM0d04S/art1.png" class="w-full h-auto">
+                    <div class="p-4 bg-white/90 dark:bg-slate-800 text-left border-t border-gray-100 dark:border-white/5">
+                        <p class="text-[10px] font-bold text-textmuted uppercase mb-1">Ilustrator</p>
+                        <p class="text-sm font-bold text-textmain">@Artist_Sky_Blue</p>
+                    </div>
+                </div>
+                <!-- Art 2 -->
+                <div class="break-inside-avoid rounded-3xl overflow-hidden shadow-xl bg-bgsecondary dark:bg-slate-800 border-2 border-white/50 dark:border-white/5 transform hover:scale-105 transition-transform">
+                    <img src="https://i.postimg.cc/d1pqYnzX/Tak-berjudul78-20250719142159.png" class="w-full h-auto">
+                    <div class="p-4 bg-white/90 dark:bg-slate-800 text-left border-t border-gray-100 dark:border-white/5">
+                        <p class="text-[10px] font-bold text-textmuted uppercase mb-1">Ilustrator</p>
+                        <p class="text-sm font-bold text-textmain">@Kucing_Oren_Art</p>
+                    </div>
+                </div>
+                <!-- Art 3 -->
+                <div class="break-inside-avoid rounded-3xl overflow-hidden shadow-xl bg-bgsecondary dark:bg-slate-800 border-2 border-white/50 dark:border-white/5 transform hover:scale-105 transition-transform">
+                    <img src="https://i.postimg.cc/y631P4R4/Tak-berjudul92-20250810084334.png" class="w-full h-auto">
+                    <div class="p-4 bg-white/90 dark:bg-slate-800 text-left border-t border-gray-100 dark:border-white/5">
+                        <p class="text-[10px] font-bold text-textmuted uppercase mb-1">Ilustrator</p>
+                        <p class="text-sm font-bold text-textmain">@Chicken_Master</p>
+                    </div>
+                </div>
+                <!-- Art 4 -->
+                <div class="break-inside-avoid rounded-3xl overflow-hidden shadow-xl bg-bgsecondary dark:bg-slate-800 border-2 border-white/50 dark:border-white/5 transform hover:scale-105 transition-transform">
+                    <img src="https://i.postimg.cc/C5bVV0C4/Tak-berjudul93-20250810142422.png" class="w-full h-auto">
+                    <div class="p-4 bg-white/90 dark:bg-slate-800 text-left border-t border-gray-100 dark:border-white/5">
+                        <p class="text-[10px] font-bold text-textmuted uppercase mb-1">Ilustrator</p>
+                        <p class="text-sm font-bold text-textmain">@Gamer_Illust</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECIAL THANKS / CREDITS -->
+    <section id="thanks" class="py-24 bg-bgmain relative transition-colors duration-500 overflow-hidden">
+        <i class="fas fa-heart text-accent/10 icon-deco left-20 bottom-10 text-[150px] animate-pulse"></i>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h2 class="text-4xl md:text-5xl font-display font-bold text-textmain mb-4">Special <span class="text-accent">Thanks</span></h2>
+            <p class="text-textmuted font-bold mb-12">Terima kasih kepada orang-orang hebat di balik layar! 💖</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <!-- Mama (Ilustrator) -->
+                <div class="bg-white/80 dark:bg-slate-800/80 p-8 rounded-3xl shadow-lg border-2 border-accent/20 backdrop-blur-sm transform hover:-translate-y-2 transition-all">
+                    <div class="w-20 h-20 mx-auto bg-accent/20 rounded-full flex items-center justify-center text-3xl mb-4">
+                        <i class="fas fa-paint-brush text-accent"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-textmain mb-1">@Mama_Art</h3>
+                    <p class="text-sm text-accent font-bold mb-3 uppercase tracking-widest">Character Design</p>
+                    <p class="text-xs text-textmuted">"Makasih mama udah ngasih visual yang cakep buat Iyashi!"</p>
+                </div>
+
+                <!-- Papa (Rigger) -->
+                <div class="bg-white/80 dark:bg-slate-800/80 p-8 rounded-3xl shadow-lg border-2 border-primary/20 backdrop-blur-sm transform hover:-translate-y-2 transition-all">
+                    <div class="w-20 h-20 mx-auto bg-primary/20 rounded-full flex items-center justify-center text-3xl mb-4">
+                        <i class="fas fa-cube text-primary"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-textmain mb-1">@Papa_Rig</h3>
+                    <p class="text-sm text-primary font-bold mb-3 uppercase tracking-widest">Live2D Rigger</p>
+                    <p class="text-xs text-textmuted">"Berkat papa, Iyashi bisa joget-joget dan makan ayam dengan mulus."</p>
+                </div>
+
+                <!-- Tim/Web -->
+                <div class="bg-white/80 dark:bg-slate-800/80 p-8 rounded-3xl shadow-lg border-2 border-secondary/20 backdrop-blur-sm transform hover:-translate-y-2 transition-all">
+                    <div class="w-20 h-20 mx-auto bg-secondary/20 rounded-full flex items-center justify-center text-3xl mb-4">
+                        <i class="fas fa-code text-secondary"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-textmain mb-1">Katamamahbisacoding</h3>
+                    <p class="text-sm text-secondary font-bold mb-3 uppercase tracking-widest">Web Developer</p>
+                    <p class="text-xs text-textmuted">"Yang ngebikin web kece ini buat tempat Iyashi nongkrong."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-bgmain py-16 border-t border-gray-200 dark:border-white/5 transition-colors duration-500 text-center relative overflow-hidden">
+        <i class="fas fa-drumstick-bite text-primary/5 icon-deco -bottom-10 -left-10 text-[200px]"></i>
+        <i class="fas fa-cloud text-secondary/5 icon-deco top-10 right-10 text-[150px]"></i>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex justify-center flex-wrap gap-6 md:gap-8 mb-8 text-2xl">
+                <a href="#" class="text-twitter hover:scale-125 transition-transform"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-instagram hover:scale-125 transition-transform"><i class="fab fa-instagram"></i></a>
+                <a href="https://discord.gg/yourlink" target="_blank" class="text-discord hover:scale-125 transition-transform"><i class="fab fa-discord"></i></a>
+                <a href="#" class="text-red-500 hover:scale-125 transition-transform"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="bg-discord/10 dark:bg-discord/5 p-6 rounded-[2rem] inline-block mb-6 border border-discord/20 backdrop-blur-sm mx-4 hover:bg-discord/20 transition-colors">
+                <div class="flex items-center gap-3 mb-2 justify-center">
+                    <i class="fab fa-discord text-discord text-2xl"></i>
+                    <p class="text-discord font-bold text-sm">Bergabung ke Server Discord Iyashi!</p>
+                </div>
+                <a href="https://discord.gg/yourlink" class="text-discord font-bold underline text-[10px] md:text-xs">Klik untuk bergabung & mabar gratis ➔</a>
+            </div>
+            <p class="text-textmuted font-bold text-xs md:text-sm mb-2 px-4">© 2024 Iyashi No Kage Project. All Rights Reserved.</p>
+            <div class="flex items-center justify-center gap-2 text-[10px] text-textmuted uppercase tracking-widest font-bold px-4">
+                <i class="fas fa-drumstick-bite text-secondary"></i>
+                MADE WITH LOVE & CHICKEN 🍗
+                <i class="fas fa-drumstick-bite text-secondary"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-bgsecondary/90 dark:bg-slate-900/95 backdrop-blur-2xl border-t border-gray-100/10 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+        <div class="flex justify-around items-center h-16 px-1">
+            <a href="#home" class="nav-item flex flex-col items-center justify-center w-full h-full text-textmuted active">
+                <i class="fas fa-home text-xl mb-0.5"></i><span class="text-[10px] font-bold">Home</span>
+            </a>
+            <a href="#lore" class="nav-item flex flex-col items-center justify-center w-full h-full text-textmuted">
+                <i class="fas fa-book-open text-xl mb-0.5"></i><span class="text-[10px] font-bold">Lore</span>
+            </a>
+            <div class="relative -top-5">
+                <a href="#biodata" class="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-white shadow-lg border-4 border-bgsecondary dark:border-slate-900 transform hover:scale-105 transition-all">
+                    <i class="fas fa-id-card text-2xl"></i>
+                </a>
+            </div>
+            <a href="#clips" class="nav-item flex flex-col items-center justify-center w-full h-full text-textmuted">
+                <i class="fas fa-video text-xl mb-0.5"></i><span class="text-[10px] font-bold">Shorts</span>
+            </a>
+            <a href="#thanks" class="nav-item flex flex-col items-center justify-center w-full h-full text-textmuted">
+                <i class="fas fa-heart text-xl mb-0.5"></i><span class="text-[10px] font-bold">Credits</span>
+            </a>
+        </div>
+    </nav>
+    <div class="md:hidden h-16"></div> <!-- Spacer for mobile nav -->
+
+    <script>
+        // --- THEME TOGGLE ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btnIcon = document.querySelector('#theme-btn i');
+            const navIcon = document.querySelector('#nav-icon');
+            const navIconMobile = document.querySelector('#nav-icon-mobile');
+            
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                btnIcon.className = "fas fa-sun text-xl md:text-2xl text-secondary group-hover:rotate-90 transition-all duration-500";
+                navIcon.className = "fas fa-sun text-secondary animate-spin-slow";
+                navIconMobile.className = "fas fa-sun text-secondary animate-spin-slow";
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btnIcon.className = "fas fa-moon text-xl md:text-2xl text-primary group-hover:-rotate-12 transition-all duration-500";
+                navIcon.className = "fas fa-moon text-primary animate-bounce";
+                navIconMobile.className = "fas fa-moon text-primary animate-bounce";
+            }
+        }
+
+        // --- ACTIVE NAV ITEM (MOBILE) ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if(this.classList.contains('nav-item')) {
+                    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'text-primary'));
+                    document.querySelectorAll('.nav-item').forEach(el => el.classList.add('text-textmuted'));
+                    
+                    this.classList.add('active', 'text-primary');
+                    this.classList.remove('text-textmuted');
+                }
+            });
+        });
+
+        // --- LORE VIDEO LOGIC ---
+        const videoModal = document.getElementById('video-modal');
+        const loreVideo = document.getElementById('lore-video-player');
+
+        function playLoreVideo() {
+            // Tampilkan modal
+            videoModal.classList.remove('hidden');
+            // Sedikit delay agar transisi CSS bekerja
+            setTimeout(() => {
+                videoModal.classList.remove('opacity-0');
+                videoModal.classList.add('opacity-100');
+                // Mulai mainkan video
+                loreVideo.play().catch(error => {
+                    console.log("Auto-play was prevented by browser, waiting for user interaction.");
+                });
+            }, 50);
+        }
+
+        // Ketika video selesai, tutup modal otomatis
+        loreVideo.addEventListener('ended', () => {
+            closeLoreVideo();
+        });
+
+        function closeLoreVideo() {
+            videoModal.classList.remove('opacity-100');
+            videoModal.classList.add('opacity-0');
+            setTimeout(() => {
+                videoModal.classList.add('hidden');
+            }, 500); // Samakan dengan durasi transisi
+        }
+    </script>
+</body>
+</html>
